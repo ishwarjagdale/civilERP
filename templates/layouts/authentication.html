@@ -1,0 +1,11 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+    <div class="flex items-center w-full h-full bg-white">
+        <div class="flex flex-1 items-center justify-center p-24 border-r">
+            <img src="/static/img/back.jpg" alt="background image">
+        </div>
+        {% block form %}
+        {% endblock %}
+    </div>
+{% endblock %}

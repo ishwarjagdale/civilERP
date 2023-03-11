@@ -1,0 +1,63 @@
+{% extends 'layouts/dashboard.html' %}
+
+
+{% block content %}
+    <div class="flex items-start justify-center w-full overflow-y-scroll m-2 p-10">
+        <div class="flex flex-col flex-1 items-center max-w-screen-lg">
+            <div class="flex flex-col mx-4 font-[600] mb-4 w-full">
+                <span class="text-sm text-gray-600">ID</span>
+                <span class="text-lg text-left">{{ contract.contract_id }}</span>
+            </div>
+            <hr class="w-full block mb-4"/>
+            <div class="flex items-start w-full mx-4 mb-4">
+                <div class="flex flex-col items-start font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Received Date</span>
+                    <span class="text-sm text-left">{{ contract.details.recv_date }}</span>
+                </div>
+                <div class="flex flex-col items-end font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Quantity Received</span>
+                    <span class="text-md text-left">{{ contract.details.quantity }}</span>
+                </div>
+            </div>
+            <div class="flex items-start w-full mx-4 mb-4">
+                <div class="flex flex-col items-start font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Material Description</span>
+                    <span class="text-sm font-[serif] leading-7 text-justify font-[500] text-left">{{ contract.details.description }}</span>
+                </div>
+                <div class="flex flex-col items-end font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Material Condition</span>
+                    <span class="text-md text-left">{{ contract.details.condition }}</span>
+                </div>
+            </div>
+            <div class="flex items-start w-full mx-4 mb-4">
+                <div class="flex flex-col items-start font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Test to Perform</span>
+                    <span class="text-md text-left">{{ contract.test.test_name }}</span>
+                </div>
+                <div class="flex flex-col items-end font-[600] flex-1">
+                    <span class="text-sm text-gray-600">Assigned to</span>
+                    <span class="text-md text-left">{{ contract.tester.name }}</span>
+                </div>
+            </div>
+            <hr class="w-full block mb-8"/>
+            <span class="text-md mx-4 mb-4 w-full font-[600] text-left">Total Samples: {{ contract.details.quantity }}</span>
+            <form action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}" method="post" class="flex flex-col w-full">
+                <ul class="flex flex-col w-full">
+                {% for item in contract.inventory %}
+                    <li class="flex items-center flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
+                        <i class="uil uil-box text-2xl"></i>
+                        <label class="flex items-center flex-1">
+                            <span class="text-xs ml-8">Original ID Mark</span>
+                            <input class="text-sm w-full outline-none flex-1 mx-4 border-b p-1" value="{{ item.original_id_mark }}" type="text" name="{{ item.item_id }}" placeholder="Original Identification Mark">
+                        </label>
+                        <span class="text-sm font-[600] flex-1 text-right">{{ item.sample_code }}</span>
+                    </li>
+                {% endfor %}
+                </ul>
+                <button class="p-4 text-sm bg-slate-900 hover:bg-black rounded-xl w-full text-white">
+                        Update Inventory
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}/

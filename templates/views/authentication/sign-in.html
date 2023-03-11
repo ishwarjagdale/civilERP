@@ -1,0 +1,17 @@
+{% extends 'layouts/authentication.html' %}
+
+{% block form %}
+    <form method="post" class="max-w-screen-sm w-full flex flex-1 flex-col items-start justify-center p-24">
+        <span class="font-[600] text-2xl mb-2">Log In</span>
+        <span class="text-sm text-gray-600 font-[500] mb-8">Welcome back, use the credentials to access the app</span>
+        {% if errors %}<span class="p-3 px-4 text-xs font-medium w-full bg-red-400 rounded-lg text-white mb-4">{{ errors }}</span>{% endif %}
+        <label class="mb-6 w-full">
+            <input class="focus:border-b-2 focus:border-black text-sm outline-none w-full py-2 border-b" type="email" name="email" placeholder="Email" autocomplete="email" required>
+        </label>
+        <label class="mb-6 w-full">
+            <input class="focus:border-b-2 focus:border-black text-sm outline-none w-full py-2 border-b" type="password" name="password" placeholder="Password" autocomplete="password" required>
+        </label>
+        <button class="w-full mt-4 p-4 bg-[#1f1f1f] hover:bg-black rounded-lg text-white text-sm" type="submit">Log In</button>
+        <a class="mt-6 w-full text-center text-sm" href="{{ url_for('auth.create_account') }}">Don't have an account? Create one</a>
+    </form>
+{% endblock %}

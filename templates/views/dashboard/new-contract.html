@@ -1,0 +1,108 @@
+{% extends 'layouts/dashboard.html' %}
+
+
+{% block content %}
+    <div class="flex items-start justify-center w-full overflow-y-scroll m-2">
+        <div class="flex flex-col flex-1 items-center max-w-screen-lg">
+            <form action="{{ url_for('dash.new_contract') }}" method="post" class="flex flex-col items-start w-full p-4 drop-shadow-sm">
+                <span class="text-sm mb-4 p-2 text-gray-800 w-full font-[600] border-b text-left">Client Details</span>
+                <div class="flex items-center w-full">
+                    <label class="mb-6 mr-4 flex-1">
+                        <span class="text-sm font-[500] block p-2">Name</span>
+                        <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                               type="text"
+                               name="client_name" placeholder="Name" autocomplete="name" required>
+                    </label>
+                    <label class="mb-6 flex-1">
+                        <span class="text-sm font-[500] block p-2">Contact No.</span>
+                        <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                               type="tel"
+                               name="client_contact" placeholder="+91 XXXXXXXXXX" autocomplete="tel" required>
+                    </label>
+                </div>
+                <label class="mb-6 w-full">
+                        <span class="text-sm font-[500] block p-2">Received at Site/Office Address</span>
+                        <textarea class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                                  name="received_address" placeholder="Address" autocomplete="address"
+                                  required></textarea>
+                </label>
+                <br/>
+                <span class="text-sm mb-4 p-2 text-gray-800 w-full font-[600] border-b text-left">Material Delivery Details</span>
+                <label class="mb-6 mr-4 w-full">
+                    <span class="text-sm font-[500] block p-2">Delivers Name</span>
+                    <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                           type="text"
+                           name="delivers_name" placeholder="Name" autocomplete="name" required>
+                </label>
+                <div class="flex items-center w-full">
+                    <label class="mb-6 mr-4 flex-1">
+                        <span class="text-sm font-[500] block p-2">Received Date</span>
+                        <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                               type="datetime-local"
+                               name="received_date" autocomplete="date" required>
+                    </label>
+                    <label class="mb-6 mr-4 flex-1">
+                        <span class="text-sm font-[500] block p-2">Received Quantity</span>
+                        <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                               type="number" placeholder="0"
+                               name="quantity_received" autocomplete="number" required>
+                    </label>
+                    <div class="mb-6 flex-1">
+                        <span class="text-sm font-[500] block p-2">Received Sample Condition</span>
+                        <label class="bg-white block pr-4 rounded-lg">
+                            <select class="bg-transparent text-sm outline-none p-4 w-full"
+                               name="sample_condition" required>
+                                <option>Good</option>
+                                <option>Average</option>
+                                <option>Poor</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <label class="mb-6 w-full">
+                    <span class="text-sm font-[500] block p-2">Material Description</span>
+                    <textarea class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                              name="material_description" placeholder="Description" autocomplete="text"
+                              required></textarea>
+                </label>
+                <span class="text-sm mb-4 p-2 text-gray-800 w-full font-[600] border-b text-left">Test Details</span>
+                <div class="flex items-center w-full">
+                    <div class="mb-6 mr-4 flex-1">
+                        <span class="text-sm font-[500] block p-2">Test to Perform</span>
+                        <label class="bg-white block pr-4 rounded-lg">
+                            <select class="bg-transparent text-sm outline-none p-4 w-full"
+                                    name="tests" required>
+                                <option>Select Tests</option>
+                                {% for test in tests %}
+                                    <option value="{{ test.test_id }}">{{ test.test_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    </div>
+                    <label class="mb-6">
+                        <span class="text-sm font-[500] block p-2">Expcted Report Date</span>
+                        <input class="bg-white text-sm rounded-lg outline-none p-4 w-full"
+                               type="datetime-local"
+                               name="expected_report" autocomplete="date" required>
+                </label>
+                </div>
+                <div class="mb-6 w-full">
+                    <span class="text-sm font-[500] block p-2">Assign To</span>
+                    <label class="bg-white block pr-4 rounded-lg">
+                        <select class="bg-transparent text-sm outline-none p-4 w-full"
+                                name="assignees" required>
+                            <option>Select Tester</option>
+                            {% for tester in testers %}
+                                <option value="{{ tester.user_id }}">{{ tester.name }} - {{ tester.email_address }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <br/><br/>
+                <button class="p-4 text-sm bg-slate-900 hover:bg-black rounded-xl w-full text-white" type="submit">
+                    Create New Contract
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

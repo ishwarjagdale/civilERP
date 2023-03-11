@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    font-family: Poppins, sans-serif;
+    overflow: hidden;
+    background: ghostwhite;
+}
+
+*::-webkit-scrollbar {
+    width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #d3d3d3;
+    outline: none;
+    border-radius: 4px;
+}
+
+.bg-light-red {
+    background: rgba(255, 0, 0, 0.05)
+}
+
+.bg-light-green {
+    background: rgba(0, 255, 0, 0.05)
+}

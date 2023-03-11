@@ -1,0 +1,47 @@
+{% extends 'layouts/dashboard.html' %}
+
+
+{% block content %}
+    <div class="flex items-start justify-center w-full overflow-y-scroll m-2 p-10">
+        <div class="flex flex-col flex-1 items-center max-w-screen-lg">
+            <span class="text-lg mx-4 mb-4 w-full font-[600] text-left">Active ({{ contracts.active|length }})</span>
+            <ul class="flex flex-col w-full">
+                {% for contract in contracts.active %}
+                    <li class="flex flex-col items-start flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
+                        <div class="flex items-center justify-between w-full flex-1">
+                            {% if user.superuser %}
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-[500]">Client: {{ contract.client.name }}</span>
+                                    <span class="text-xs text-gray-400 my-1 font-[500]">{{ contract.contract_id }}</span>
+                                    <span class="text-sm font-[500] whitespace-pre">Test Name: {{ contract.test.test_name }}</span>
+                                </div>
+                                <div class="flex flex-col whitespace-pre items-end">
+                                <span class="text-sm font-[500]">Assigned to: {{ contract.tester.name }}</span>
+                                <span class="text-sm font-[500] whitespace-pre">Quantity: {{ contract.details.quantity }} N</span>
+                            </div>
+                            {% else %}
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-[500] whitespace-pre">Test Name:</span>
+    {#                                <span class="text-xs text-gray-400 my-1 font-[500]">{{ contract.contract_id }}</span>#}
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="text-sm font-[500] whitespace-pre">Quantity: {{ contract.details.quantity }} N</span>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <span class="block text-[13px] text-justify mt-4 font-normal">Description: {{ contract.details.description }}</span>
+                        {% if user.superuser %}<a class="ml-auto p-2 hover:bg-[#f1f1f1] rounded-xl text-2xl" href="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}"><i class="uil uil-box"></i></a>{% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <span class="text-lg m-4 mt-8 w-full font-[600] text-left">Completed ({{ contracts.completed|length }})</span>
+            <ul class="flex flex-col w-full">
+                {% for contract in contracts.completed %}
+                    <li class="flex items-center flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
