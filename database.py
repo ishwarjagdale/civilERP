@@ -43,6 +43,7 @@ class Inventory(db.Model):
     contract_id = db.Column(UUID(as_uuid=True), db.ForeignKey('contracts.contract_id'))
     original_id_mark = db.Column(db.VARCHAR)
     sample_code = db.Column(db.VARCHAR)
+    test_results = db.Column(db.VARCHAR)
 
 
 class Tests(db.Model):
@@ -50,6 +51,7 @@ class Tests(db.Model):
 
     test_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     test_name = db.Column(db.VARCHAR, nullable=False)
+    test_attrib = db.Column(db.VARCHAR, nullable=False, default="Value")
 
 
 class Users(db.Model):

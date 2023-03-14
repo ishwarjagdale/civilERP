@@ -120,13 +120,10 @@ def accounts():
                            user=current_user)
 
 
-@dash.route("/inventory/<contract_id>", methods=["GET", "POST"])
+@dash.route("/contracts/<contract_id>", methods=["GET", "POST"])
 @login_required
 def inventory(contract_id):
-    if not current_user.is_superuser:
-        return redirect(url_for('dash.dashboard'))
-
-    if request.method == "POST":
+    if request.method == "POST" and current_user.is_superuser:
         for i in request.form:
             item = Inventory.query.filter_by(item_id=i).first()
             if item:
@@ -135,23 +132,41 @@ def inventory(contract_id):
 
     contract = Contracts.query.filter_by(contract_id=contract_id).first()
     if contract:
+        if "mark-complete" in request.args:
+            contract.completed = True
+            db.session.commit()
+            return redirect(url_for('dash.contracts'))
+
         contract.details = ContractDetails.query.filter_by(contract_id=contract.contract_id).first()
         contract.tester = Users.get(contract.assigned_to)
         contract.inventory = Inventory.query.filter_by(contract_id=contract_id).all()
         contract.test = Tests.query.filter_by(test_id=contract.details.test_to_perform).first()
-        print(contract.inventory)
-        return render_template('views/dashboard/inventory.html', title="Inventory | C-Labs", tab="Inventory",
+        return render_template('views/dashboard/inventory.html', title="Contract Details | C-Labs", tab="Contract Details",
                                contract=contract, user=current_user)
+
+
+@dash.route("/test_reports/<contract_id>", methods=["POST"])
+@login_required
+def test_reports(contract_id):
+    contract = Contracts.query.filter_by(contract_id=contract_id).first()
+    if contract:
+        for i in request.form:
+            item = Inventory.query.filter_by(item_id=i).first()
+            if item:
+                item.test_results = request.form.get(i)
+        db.session.commit()
+
+    return redirect(url_for('dash.inventory', contract_id=contract_id))
 
 
 @dash.route("/tests", methods=["GET", "POST"])
 @login_required
 def tests():
     if request.method == "POST":
-        test = Tests(test_name=request.form.get('test_name'))
+        test = Tests(test_name=request.form.get('test_name'), test_attrib=request.form.get('test_attrib'))
         db.session.add(test)
         db.session.commit()
 
     ts = Tests.query.all()
-    return render_template('views/dashboard/tests.html', title="Inventory | C-Labs", tab="Inventory",
+    return render_template('views/dashboard/tests.html', title="New Tests | C-Labs", tab="New Tests",
                            user=current_user, tests=ts)

@@ -4,59 +4,128 @@
 {% block content %}
     <div class="flex items-start justify-center w-full overflow-y-scroll m-2 p-10">
         <div class="flex flex-col flex-1 items-center max-w-screen-lg">
-            <div class="flex flex-col mx-4 font-[600] mb-4 w-full">
-                <span class="text-sm text-gray-600">ID</span>
-                <span class="text-lg text-left">{{ contract.contract_id }}</span>
+            <div class="flex items-center mx-4 mb-4 w-full">
+                <div class="flex flex-col font-[600] w-full">
+                    {% if user.superuser %}
+                        <span class="text-sm text-gray-600">ID</span>
+                        <span class="text-lg text-left">{{ contract.contract_id }}</span>
+                    {% else %}
+                        <span class="text-lg text-left">Contract Details</span>
+                    {% endif %}
+                </div>
+                {% if contract.completed %}
+                    <span  class="p-2 text-sm transition-all ease-in-out flex items-center justify-center bg-transparent hover:bg-[#f1f1f1] rounded-xl max-w-[200px] w-full">
+                            <i class="uil uil-check text-xl mx-2"></i>Contract completed
+                    </span>
+                {% else %}
+                    <form method="get" action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}" class="w-full max-w-[200px]">
+                        <button type="submit" name="mark-complete" value="True" class="p-2 text-sm transition-all ease-in-out flex items-center justify-center bg-transparent hover:bg-[#f1f1f1] rounded-xl w-full">
+                            <i class="uil uil-check text-xl mx-2"></i><span>Mark as completed</span>
+                        </button>
+                    </form>
+                {% endif %}
             </div>
             <hr class="w-full block mb-4"/>
-            <div class="flex items-start w-full mx-4 mb-4">
-                <div class="flex flex-col items-start font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Received Date</span>
+            <div class="flex items-start w-full font-[500] mx-4 mb-4">
+                <div class="flex flex-col items-start flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Received Date</span>
                     <span class="text-sm text-left">{{ contract.details.recv_date }}</span>
                 </div>
-                <div class="flex flex-col items-end font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Quantity Received</span>
+                <div class="flex flex-col items-end flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Quantity Received</span>
                     <span class="text-md text-left">{{ contract.details.quantity }}</span>
                 </div>
             </div>
-            <div class="flex items-start w-full mx-4 mb-4">
-                <div class="flex flex-col items-start font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Material Description</span>
-                    <span class="text-sm font-[serif] leading-7 text-justify font-[500] text-left">{{ contract.details.description }}</span>
+            <div class="flex items-start w-full font-[500] mx-4 mb-4">
+                <div class="flex flex-col items-start flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Material Description</span>
+                    <span class="text-sm text-justify font-[500] text-left">{{ contract.details.description }}</span>
                 </div>
-                <div class="flex flex-col items-end font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Material Condition</span>
+                <div class="flex flex-col items-end flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Material Condition</span>
                     <span class="text-md text-left">{{ contract.details.condition }}</span>
                 </div>
             </div>
-            <div class="flex items-start w-full mx-4 mb-4">
-                <div class="flex flex-col items-start font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Test to Perform</span>
+            <div class="flex items-start w-full font-[500] mx-4 mb-4">
+                <div class="flex flex-col items-start flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Test to Perform</span>
                     <span class="text-md text-left">{{ contract.test.test_name }}</span>
                 </div>
-                <div class="flex flex-col items-end font-[600] flex-1">
-                    <span class="text-sm text-gray-600">Assigned to</span>
+                <div class="flex flex-col items-end flex-1">
+                    <span class="text-sm text-gray-600 font-[600]">Assigned to</span>
                     <span class="text-md text-left">{{ contract.tester.name }}</span>
                 </div>
             </div>
             <hr class="w-full block mb-8"/>
-            <span class="text-md mx-4 mb-4 w-full font-[600] text-left">Total Samples: {{ contract.details.quantity }}</span>
-            <form action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}" method="post" class="flex flex-col w-full">
-                <ul class="flex flex-col w-full">
-                {% for item in contract.inventory %}
-                    <li class="flex items-center flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
-                        <i class="uil uil-box text-2xl"></i>
-                        <label class="flex items-center flex-1">
-                            <span class="text-xs ml-8">Original ID Mark</span>
-                            <input class="text-sm w-full outline-none flex-1 mx-4 border-b p-1" value="{{ item.original_id_mark }}" type="text" name="{{ item.item_id }}" placeholder="Original Identification Mark">
-                        </label>
-                        <span class="text-sm font-[600] flex-1 text-right">{{ item.sample_code }}</span>
-                    </li>
-                {% endfor %}
-                </ul>
-                <button class="p-4 text-sm bg-slate-900 hover:bg-black rounded-xl w-full text-white">
-                        Update Inventory
+            {% if user.superuser %}
+                <div class="flex items-center mx-4 mb-4 w-full">
+                <span class="text-md w-full font-[600] text-left">Total Samples: {{ contract.details.quantity }}</span>
+{#                <button class="p-2 text-sm transition-all ease-in-out flex items-center justify-center bg-transparent hover:bg-[#f1f1f1] rounded-xl max-w-[200px] w-full">#}
+{#                    <i class="uil uil-save text-xl mx-2"></i><span>Update Inventory</span>#}
+{#                </button>#}
+                </div>
+
+                <form
+                        {% if not contract.completed %}
+                        action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}"
+                        method="post"
+                        {% endif %}
+                      class="flex flex-col w-full mb-8">
+                    <ul class="flex flex-col w-full">
+                        {% for item in contract.inventory %}
+                            <li class="flex items-center flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
+                                <i class="uil uil-box text-2xl"></i>
+                                <label class="flex items-center flex-1">
+                                    <span class="text-xs ml-8">Original ID Mark</span>
+                                    <input class="text-sm w-full outline-none flex-1 mx-4 border-b p-1"
+                                           value="{{ item.original_id_mark }}" type="text" name="{{ item.item_id }}"
+                                           placeholder="Original Identification Mark">
+                                </label>
+                                <span class="text-sm font-[500] flex-1 text-right">{{ item.sample_code }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    {% if not contract.completed %}
+                    <button type="submit" class="p-3 text-sm bg-black hover:bg-black rounded-xl w-full text-white">
+                        <i class="uil uil-save text-lg mx-2"></i><span>Update Inventory</span>
+                    </button>
+                    {% endif %}
+                </form>
+            {% endif %}
+            <div class="flex items-center mx-4 mt-8 mb-4 w-full">
+                <span class="text-md w-full font-[600] text-left">Test Results ({{ contract.test.test_name }}):</span>
+                <button class="p-2 flex items-center text-sm transition-all ease-in-out flex items-center justify-center bg-transparent hover:bg-[#f1f1f1] rounded-xl max-w-[200px] w-full">
+                    <i class="uil uil-file-info-alt text-xl mr-2"></i><span>Generate Report</span>
                 </button>
+            </div>
+            <form
+                    {% if not contract.completed %}
+                    action="{{ url_for('dash.test_reports', contract_id=contract.contract_id) }}"
+                    method="post"
+                    {% endif %}
+                  class="flex flex-col w-full mb-8">
+                <ul class="flex flex-col w-full">
+                    {% for item in contract.inventory %}
+                        <li class="flex items-center flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm">
+                            <i class="uil uil-box text-2xl"></i>
+                            <div class="flex items-center flex-1">
+                                <span class="text-xs ml-8">Sample Code</span>
+                                <span class="text-sm font-[500] mx-8">{{ item.sample_code }}</span>
+                            </div>
+                            <label class="flex items-center flex-1">
+                                <span class="text-xs ml-8">{{ contract.test.test_attrib }}</span>
+                                <input class="text-sm w-full outline-none flex-1 mx-8 border-b p-1"
+                                       value="{{ item.test_results }}" type="text" name="{{ item.item_id }}"
+                                       placeholder="{{ contract.test.test_attrib }} Value">
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if not contract.completed %}
+                <button type="submit" class="p-3 flex items-center text-sm bg-black hover:bg-black justify-center rounded-xl w-full text-white">
+                    <i class="uil uil-save text-lg mx-2"></i><span>Save Results</span>
+                </button>
+                {% endif %}
             </form>
         </div>
     </div>
