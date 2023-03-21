@@ -9,7 +9,7 @@
                 {% for contract in contracts.active %}
                     <li>
                         <a class="flex flex-col items-start flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm"
-                           href="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}">
+                           href="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}">
                             <div class="flex items-center justify-between w-full flex-1">
                                 {% if user.superuser %}
                                     <div class="flex flex-col">
@@ -33,7 +33,7 @@
                             </div>
                             <span class="block text-[13px] text-justify mt-4 font-normal">Description: {{ contract.details.description }}</span>
                         </a>
-                        {#                        {% if user.superuser %}<a class="ml-auto p-2 hover:bg-[#f1f1f1] rounded-xl text-2xl" href="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}"><i class="uil uil-box"></i></a>{% endif %}#}
+                        {#                        {% if user.superuser %}<a class="ml-auto p-2 hover:bg-[#f1f1f1] rounded-xl text-2xl" href="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}"><i class="uil uil-box"></i></a>{% endif %}#}
                     </li>
                 {% endfor %}
             </ul>
@@ -42,7 +42,7 @@
                 {% for contract in contracts.completed %}
                     <li>
                         <a class="flex flex-col items-start flex-1 p-6 px-8 w-full mb-4 rounded-lg bg-white justify-between drop-shadow-sm"
-                           href="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}">
+                           href="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}">
                             <div class="flex items-center justify-between w-full flex-1">
                                 {% if user.superuser %}
                                     <div class="flex flex-col">
@@ -66,7 +66,7 @@
                             </div>
                             <span class="block text-[13px] text-justify mt-4 font-normal">Description: {{ contract.details.description }}</span>
                         </a>
-                        {#                        {% if user.superuser %}<a class="ml-auto p-2 hover:bg-[#f1f1f1] rounded-xl text-2xl" href="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}"><i class="uil uil-box"></i></a>{% endif %}#}
+                        {#                        {% if user.superuser %}<a class="ml-auto p-2 hover:bg-[#f1f1f1] rounded-xl text-2xl" href="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}"><i class="uil uil-box"></i></a>{% endif %}#}
                     </li>
                 {% endfor %}
             </ul>

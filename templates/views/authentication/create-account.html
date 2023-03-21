@@ -16,6 +16,6 @@
             <input class="focus:border-b-2 focus:border-black text-sm outline-none w-full py-2 border-b" type="password" name="password" placeholder="Password" autocomplete="password" required>
         </label>
         <button class="w-full mt-4 p-4 bg-[#1f1f1f] hover:bg-black rounded-lg text-white text-sm" type="submit">Create account</button>
-        <a class="mt-6 w-full text-center text-sm" href="{{ url_for('auth.sign_in') }}">Already have an account? Log in</a>
+        <a class="mt-6 w-full text-center text-sm" href="{{ url_for('civilerp.auth.sign_in') }}">Already have an account? Log in</a>
     </form>
 {% endblock %}

@@ -3,8 +3,7 @@ from flask_login import LoginManager, login_user, login_required, logout_user, c
 
 from database import Users, db
 
-auth = Blueprint('auth', __name__, url_prefix="/civilERP/auth",
-                 static_url_path="/civilERP")
+auth = Blueprint('auth', __name__, url_prefix="/auth")
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.sign_in'
@@ -26,7 +25,7 @@ def sign_in():
     errors = None
 
     if current_user.is_authenticated:
-        return redirect(url_for('dash.dashboard'))
+        return redirect(url_for('civilerp.dash.dashboard'))
 
     if request.method == "POST":
         email = request.form.get("email")
@@ -37,7 +36,7 @@ def sign_in():
             if user.password == password:
                 if user.is_authenticated:
                     login_user(user, remember=True)
-                    return redirect(url_for('dash.dashboard'))
+                    return redirect(url_for('civilerp.dash.dashboard'))
                 else:
                     errors = "Contact administration to authenticate your account."
             else:
@@ -72,4 +71,4 @@ def create_account():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.sign_in'))
+    return redirect(url_for('civilerp.auth.sign_in'))

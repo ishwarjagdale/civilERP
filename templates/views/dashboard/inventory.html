@@ -18,7 +18,7 @@
                             <i class="uil uil-check text-xl mx-2"></i>Contract completed
                     </span>
                 {% else %}
-                    <form method="get" action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}" class="w-full max-w-[200px]">
+                    <form method="get" action="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}" class="w-full max-w-[200px]">
                         <button type="submit" name="mark-complete" value="True" class="p-2 text-sm transition-all ease-in-out flex items-center justify-center bg-transparent hover:bg-[#f1f1f1] rounded-xl w-full">
                             <i class="uil uil-check text-xl mx-2"></i><span>Mark as completed</span>
                         </button>
@@ -67,7 +67,7 @@
 
                 <form
                         {% if not contract.completed %}
-                        action="{{ url_for('dash.inventory', contract_id=contract.contract_id) }}"
+                        action="{{ url_for('civilerp.dash.inventory', contract_id=contract.contract_id) }}"
                         method="post"
                         {% endif %}
                       class="flex flex-col w-full mb-8">
@@ -100,7 +100,7 @@
             </div>
             <form
                     {% if not contract.completed %}
-                    action="{{ url_for('dash.test_reports', contract_id=contract.contract_id) }}"
+                    action="{{ url_for('civilerp.dash.test_reports', contract_id=contract.contract_id) }}"
                     method="post"
                     {% endif %}
                   class="flex flex-col w-full mb-8">

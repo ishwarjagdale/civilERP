@@ -3,14 +3,13 @@ from flask_login import current_user, login_required
 
 from database import Users, db, Contracts, ContractDetails, ClientDetails, Inventory, Tests
 
-dash = Blueprint('dash', __name__, url_prefix="/civilERP/dashboard",
-                 static_url_path="/civilERP")
+dash = Blueprint('dash', __name__, url_prefix="/dashboard")
 
 
 @dash.route("/")
 @login_required
 def dashboard():
-    return redirect(url_for('dash.overview'))
+    return redirect(url_for('civilerp.dash.overview'))
 
 
 @dash.route("/overview")
@@ -24,7 +23,7 @@ def overview():
 @login_required
 def new_contract():
     if not current_user.is_superuser:
-        return redirect(url_for('dash.dashboard'))
+        return redirect(url_for('civilerp.dash.dashboard'))
 
     if request.method == "POST":
         """
@@ -65,7 +64,7 @@ def new_contract():
             db.session.add(inv)
         db.session.commit()
 
-        return redirect(url_for('dash.inventory', contract_id=contract.contract_id))
+        return redirect(url_for('civilerp.dash.inventory', contract_id=contract.contract_id))
 
     users = Users.query.filter_by(authenticated=True).all()
     ts = Tests.query.all()
@@ -97,7 +96,7 @@ def contracts():
 @login_required
 def accounts():
     if not current_user.is_superuser:
-        return redirect(url_for('dash.dashboard'))
+        return redirect(url_for('civilerp.dash.dashboard'))
 
     if request.method == "POST":
         if "action" in request.form and "user_id" in request.form:
@@ -135,7 +134,7 @@ def inventory(contract_id):
         if "mark-complete" in request.args:
             contract.completed = True
             db.session.commit()
-            return redirect(url_for('dash.contracts'))
+            return redirect(url_for('civilerp.dash.contracts'))
 
         contract.details = ContractDetails.query.filter_by(contract_id=contract.contract_id).first()
         contract.tester = Users.get(contract.assigned_to)
@@ -156,7 +155,7 @@ def test_reports(contract_id):
                 item.test_results = request.form.get(i)
         db.session.commit()
 
-    return redirect(url_for('dash.inventory', contract_id=contract_id))
+    return redirect(url_for('civilerp.dash.inventory', contract_id=contract_id))
 
 
 @dash.route("/tests", methods=["GET", "POST"])

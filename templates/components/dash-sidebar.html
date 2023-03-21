@@ -5,12 +5,12 @@
     </div>
     <hr class="my-8 w-full block border-gray-500">
     <ul class="flex flex-col items-center h-full">
-        <li class="mb-8"><a href="{{ url_for('dash.overview') }}"><i class="uil uil-apps text-2xl text-white"></i></a></li>
-        {% if user.superuser %}<li class="mb-8"><a href="{{ url_for('dash.new_contract') }}"><i class="uil uil-focus-add text-2xl text-white"></i></a></li>{% endif %}
-        <li class="mb-8"><a href="{{ url_for('dash.contracts') }}"><i class="uil uil-file-contract text-2xl text-white"></i></a></li>
-        <li class="mb-8"><a href="{{ url_for('dash.tests') }}"><i class="uil uil-text text-2xl text-white"></i></a></li>
-        {% if user.superuser %}<li class="mb-8"><a href="{{ url_for('dash.accounts') }}"><i class="uil uil-users-alt text-2xl text-white"></i></a></li>{% endif %}
-        <li class="mt-auto mb-8"><a href="{{ url_for('dash.overview') }}"><i class="uil uil-setting text-2xl text-white"></i></a></li>
-        <li><a href="{{ url_for('auth.logout') }}"><i class="uil uil-signout text-2xl text-white"></i></a></li>
+        <li class="mb-8"><a href="{{ url_for('civilerp.dash.overview') }}"><i class="uil uil-apps text-2xl text-white"></i></a></li>
+        {% if user.superuser %}<li class="mb-8"><a href="{{ url_for('civilerp.dash.new_contract') }}"><i class="uil uil-focus-add text-2xl text-white"></i></a></li>{% endif %}
+        <li class="mb-8"><a href="{{ url_for('civilerp.dash.contracts') }}"><i class="uil uil-file-contract text-2xl text-white"></i></a></li>
+        <li class="mb-8"><a href="{{ url_for('civilerp.dash.tests') }}"><i class="uil uil-text text-2xl text-white"></i></a></li>
+        {% if user.superuser %}<li class="mb-8"><a href="{{ url_for('civilerp.dash.accounts') }}"><i class="uil uil-users-alt text-2xl text-white"></i></a></li>{% endif %}
+        <li class="mt-auto mb-8"><a href="{{ url_for('civilerp.dash.overview') }}"><i class="uil uil-setting text-2xl text-white"></i></a></li>
+        <li><a href="{{ url_for('civilerp.auth.logout') }}"><i class="uil uil-signout text-2xl text-white"></i></a></li>
     </ul>
 </div>
