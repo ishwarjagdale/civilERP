@@ -6,7 +6,7 @@ from database import Users, db
 auth = Blueprint('auth', __name__, url_prefix="/auth")
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.sign_in'
+login_manager.login_view = 'civilerp.auth.sign_in'
 
 
 @login_manager.user_loader
