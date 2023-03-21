@@ -1,10 +1,10 @@
-import datetime
-
 from flask import Blueprint, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
+
 from database import Users, db, Contracts, ContractDetails, ClientDetails, Inventory, Tests
 
-dash = Blueprint('dash', __name__, url_prefix="/dashboard")
+dash = Blueprint('dash', __name__, url_prefix="/civilERP/dashboard",
+                 static_url_path="/civilERP")
 
 
 @dash.route("/")

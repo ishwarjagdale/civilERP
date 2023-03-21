@@ -17,7 +17,7 @@ with app.app_context():
     login_manager.init_app(app)
 
 
-@app.route('/')
+@app.route("/civilERP")
 def hello_world():
     return redirect(url_for('auth.sign_in'))
 

@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+
 from database import Users, db
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+auth = Blueprint('auth', __name__, url_prefix="/civilERP/auth",
+                 static_url_path="/civilERP")
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.sign_in'
